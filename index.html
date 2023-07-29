@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Regex Example</title>
+  <script>
+	function getParametersFromURL() {
+		var url = new URL(location.href);
+		var regexParameter = url.searchParams.get("regex");
+		if (regexParameter) {
+			document.getElementById("regexText").value = regexParameter;
+		}
+	}
+
+    function processInput() {
+      var inputText = document.getElementById("inputText").value;
+      var regex = new RegExp(document.getElementById("regexText").value, "g");
+      var matches = inputText.match(regex);
+      var outputText = "";
+
+      if (matches && matches.length > 0) {
+        outputText = matches.map(match => match.substring(2)).join("\n");
+      }
+
+      document.getElementById("outputText").value = outputText;
+    }
+	
+	window.onload = function(e){
+		getParametersFromURL();
+	}
+  </script>
+</head>
+<body>
+	<div>
+		<label for="regexText">Regex:</label>
+		<br/>
+		<textarea id="regexText" rows="4" cols="50" oninput="processInput()">:\s(.*)</textarea>
+	</div>
+
+	<div>
+		<label for="inputText">Input:</label>
+		<br/>
+		<textarea id="inputText" rows="4" cols="50" oninput="processInput()"></textarea>
+	</div>
+
+	<div>
+		<label for="outputText">Output:</label>
+		<br/>
+		<textarea id="outputText" rows="4" cols="50" readonly></textarea>
+	</div>
+</body>
+</html>
